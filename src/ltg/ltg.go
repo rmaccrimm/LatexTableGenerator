@@ -1,0 +1,46 @@
+package main
+
+import (
+	"fmt"
+	"table"
+)
+
+func main() {
+	var nrows, ncols int
+	fmt.Print("Number of rows: ")
+	fmt.Scan(&nrows)
+	fmt.Print("Number of columns: ")
+	fmt.Scan(&ncols)
+
+	tbl := table.Table{
+		Rows: nrows, Cols: ncols,
+		ColDiv:  true,
+		TopRule: true, BottomRule: true, HeaderRule: true,
+		Contents: make([][]string, nrows),
+		Headers:  make([]string, ncols),
+		ColWidth: make([]int, ncols)}
+
+	for i := range tbl.Contents {
+		tbl.Contents[i] = make([]string, ncols)
+	}
+
+	fmt.Print("Enter column headers: ")
+	var header string
+	for i := range tbl.Headers {
+		fmt.Scan(&header)
+		tbl.SetHeader(i, header)
+	}
+	getInput(&tbl)
+	tbl.Display()
+}
+
+func getInput(t *table.Table) {
+	var input string
+	for i, row := range t.Contents {
+		for j := range row {
+			fmt.Print("r", i, ", c", j, ": ")
+			fmt.Scan(&input)
+			t.SetElement(i, j, input)
+		}
+	}
+}
