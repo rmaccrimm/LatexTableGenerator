@@ -1,3 +1,5 @@
 bin
 pkg
-*.exe
+*.exe   
+src/github.com
+src/golang.org
